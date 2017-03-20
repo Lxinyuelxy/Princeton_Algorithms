@@ -28,7 +28,10 @@ public class FastCollinearPoints {
 
    // the line segments
    public LineSegment[] segments() {
-	   ArrayList<ArrayList<LineSegment>> res = new ArrayList<ArrayList<LineSegment>>();
+	   ArrayList<LineSegment> res = new ArrayList<LineSegment>();
+	   ArrayList<Point> maxPoints = new ArrayList<Point>();
+	   ArrayList<Point> minPoints = new ArrayList<Point>();
+	   
 	   
 	   for(int i = 0; i < N; i++){
 		   Arrays.sort(mPoints, mPoints[i].slopeOrder());
@@ -43,23 +46,31 @@ public class FastCollinearPoints {
 				   a.add(mPoints[++j]);
 				   curSlope = mPoints[0].slopeTo(mPoints[j]);
 			   }
-			   if(a.size() >= 4) {
-				   LineSegment line = new LineSegment(getMaxPoint(a), getMinPoint(a));
-				   ArrayList<LineSegment> temp = new ArrayList<LineSegment>();
-				   temp.add(line);
-				   if(!res.contains(temp)){
-					   res.add(temp);
+			   if(a.size() >= 4 ) {
+				   Point max = getMaxPoint(a);
+				   Point min = getMinPoint(a);
+				   if(!hasDuplicateInLineSegment(maxPoints, minPoints, max, min)){
+					   maxPoints.add(max);
+					   minPoints.add(min);
+					   res.add(new LineSegment(max, min));	
 					   numOfSeg++;
-				   }
+				   }  
 			   }
 		   }
 	   }
 	   int index = 0;
 	   LineSegment[] lineSeg = new LineSegment[res.size()];
-	   for (ArrayList<LineSegment> temp : res){
-		   lineSeg[index++] = temp.get(0);
+	   for (LineSegment temp : res){
+		   lineSeg[index++] = temp;
 	   }
 	   return lineSeg;
+   }
+   
+   private boolean hasDuplicateInLineSegment(ArrayList<Point> maxPoints, ArrayList<Point> minPoints, Point max, Point min) {
+	   for(int i = 0; i < maxPoints.size(); i++){
+		   if(max.compareTo(maxPoints.get(i)) == 0 && min.compareTo(minPoints.get(i)) == 0) return true;
+	   }
+	   return false;
    }
    
     private Point getMaxPoint(ArrayList<Point> a) {   
@@ -122,6 +133,8 @@ public class FastCollinearPoints {
 	        StdOut.println(segment);
 	        segment.draw();
 	    }
+	    System.out.println("numOfSeg = "+collinear.numberOfSegments());
 	    StdDraw.show();
+		
 	}
 }
