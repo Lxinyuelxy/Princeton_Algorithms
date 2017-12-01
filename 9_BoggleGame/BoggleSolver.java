@@ -82,7 +82,7 @@ public class BoggleSolver {
 			if(getLetterOnBoard(v) == 'Q')
 				searchValidWords(v, root.next['Q'-'A'].next['U' - 'A'], "QU", visitingDices);
 			else
-				searchValidWords(v, root.next[getLetterOnBoard(v)-'A'], getLetterOnBoard(v)+"", visitingDices);
+				searchValidWords(v, root.next[getLetterOnBoard(v)-'A'], getLetterOnBoard(v) + "", visitingDices);
 		}
 		return validWords;
 	}
@@ -91,9 +91,9 @@ public class BoggleSolver {
 		return i>=0 && i<rows && j>=0 && j<cols;
 	}
 	
-	private void searchValidWords(int v, Node x, String str, Stack<Integer> visitingDices) {
-		if (str.length() > 2 && x != null && x.val == 1) {
-			validWords.add(str);
+	private void searchValidWords(int v, Node x, String prefix, Stack<Integer> visitingDices) {
+		if (prefix.length() > 2 && x != null && x.val == 1) {
+			validWords.add(prefix);
 		}	
 		for (int w : adj[v]) {	
 			char c = getLetterOnBoard(w);
@@ -101,10 +101,10 @@ public class BoggleSolver {
 				visitingDices.push(w);
 				marked[w] = true;
 				if (c == 'Q') {	
-					searchValidWords(w, x.next['Q'-'A'].next['U' - 'A'], str+"QU", visitingDices);
+					searchValidWords(w, x.next['Q'-'A'].next['U' - 'A'], prefix + "QU", visitingDices);
 				}					
 				else {
-					searchValidWords(w, x.next[c -'A'], str+c, visitingDices);
+					searchValidWords(w, x.next[c -'A'], prefix + c, visitingDices);
 				}
 				int index = visitingDices.pop();
 				marked[index] = false;			
