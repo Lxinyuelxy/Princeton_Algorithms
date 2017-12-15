@@ -5,13 +5,11 @@ public class CircularSuffixArray {
 	private static final int R = 256;
 
 	public CircularSuffixArray(String s) {
-		if (s == null)
-			throw new java.lang.IllegalArgumentException();
+		if (s == null) throw new java.lang.IllegalArgumentException();
 		this.s = s;
 		len = s.length();
 		index = new int[len];
-		for (int i = 0; i < len; i++) 
-			index[i] = i;
+		for (int i = 0; i < len; i++) index[i] = i;
 		sort(len);
 	}
 	
@@ -36,17 +34,15 @@ public class CircularSuffixArray {
 	}
 	
 	public int index(int i) {
-		if (i >= 0 && i < len)
-			return index[i];
-		else
-			throw new java.lang.IllegalArgumentException();	
+		if (i >= 0 && i < len) return index[i];
+		else throw new java.lang.IllegalArgumentException();	
 	}
 	
 	public static void main(String[] args) {
 		CircularSuffixArray suffix = new CircularSuffixArray("ABRACADABRA!");
 		System.out.println(suffix.length());
-        for (int i = 0; i < suffix.length(); i++) {
-            System.out.println(suffix.index(i));
-        }		
+        	for (int i = 0; i < suffix.length(); i++) {
+            		System.out.println(suffix.index(i));
+        	}		
 	}
 }
