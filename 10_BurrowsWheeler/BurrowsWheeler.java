@@ -21,7 +21,7 @@ public class BurrowsWheeler {
 			char c = s.charAt(index);
 			BinaryStdOut.write(c);
 		}
-        BinaryStdOut.close();
+        	BinaryStdOut.close();
 	}
 	
 	public static void inverseTransform() {
@@ -29,18 +29,16 @@ public class BurrowsWheeler {
 		char[] t = BinaryStdIn.readString().toCharArray();
 		char[] sorted = new char[t.length];
 		int[] count = new int[R+1];
-        int[] next = new int[t.length];
+        	int[] next = new int[t.length];
 
-        for (int i = 0; i < t.length; i++)
-            count[t[i] + 1]++;
-
-        for (int r = 0; r < R; r++)
-            count[r+1] += count[r];
-
-        for (int i = 0; i < t.length; i++) {
-        	next[count[t[i]]] = i;
-        	sorted[count[t[i]]++] = t[i];  
-        }       
+        	for (int i = 0; i < t.length; i++)
+            		count[t[i] + 1]++;
+        	for (int r = 0; r < R; r++)
+            		count[r+1] += count[r];
+        	for (int i = 0; i < t.length; i++) {
+        		next[count[t[i]]] = i;
+        		sorted[count[t[i]]++] = t[i];  
+       	 	}       
 		int p = first;
 		for (int i = 0; i < t.length; i++) {
 			BinaryStdOut.write(sorted[p]);
@@ -50,12 +48,8 @@ public class BurrowsWheeler {
 	}
 	
 	public static void main(String[] args) {
-		if (args[0].equals("-")) 
-			transform();
-        else if (args[0].equals("+")) 
-        	inverseTransform();
-        else 
-        	throw new java.lang.IllegalArgumentException();
+		if (args[0].equals("-")) transform();
+        	else if (args[0].equals("+")) inverseTransform();
+        	else throw new java.lang.IllegalArgumentException();
 	}
-
 }
